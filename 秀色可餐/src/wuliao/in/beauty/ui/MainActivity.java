@@ -5,7 +5,12 @@ import java.util.ArrayList;
 
 import wuliao.in.beauty.R;
 import wuliao.in.beauty.adapter.MyFragmentPagerAdapter;
+import wuliao.in.beauty.dao.DaoMaster;
+import wuliao.in.beauty.dao.DaoSession;
+import wuliao.in.beauty.dao.User;
+import wuliao.in.beauty.dao.UserDao;
 import wuliao.in.beauty.view.IndexFragment;
+import android.app.Application;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -30,6 +35,8 @@ public class MainActivity extends FragmentActivity {
 	private int width,itemWidth;
 	private TextView mTV1,mTV2,mTV3;
 	private ArrayList<Fragment> fragments;
+	private DaoMaster mDaoMaster;
+	private DaoSession mDaoSession;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +48,21 @@ public class MainActivity extends FragmentActivity {
 		Display display=window.getDefaultDisplay();
 		width=display.getWidth();
 		itemWidth=width/3;
+		mDaoMaster=MyApplication.getDaoMaster(getApplicationContext());
+		mDaoSession=MyApplication.getDaoSession(getApplicationContext());
+		
+		UserDao userDao=mDaoSession.getUserDao();
+		User user=new User();
+		user.setUser_name("wuliao");
+		user.setPassword("456789");
+		user.setEmail("122@qq.com");
+		user.setUser_img("./images/a.jpg");
+		user.setAdd_time(System.currentTimeMillis()+"");
+		userDao.insert(user);
+		
+		
+		
+		
 		mViewPager=(ViewPager) findViewById(R.id.viewpager);
 		mViewPager.setOnPageChangeListener(new MyPageListener());
 		fragments=new ArrayList<Fragment>();
@@ -115,6 +137,8 @@ public class MainActivity extends FragmentActivity {
             animation.setDuration(300);
             mImage.startAnimation(animation);
 		}
+		
+		
 		
 	}
 }
