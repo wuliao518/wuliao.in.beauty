@@ -60,9 +60,6 @@ public class MainActivity extends FragmentActivity {
 		user.setAdd_time(System.currentTimeMillis()+"");
 		userDao.insert(user);
 		
-		
-		
-		
 		mViewPager=(ViewPager) findViewById(R.id.viewpager);
 		mViewPager.setOnPageChangeListener(new MyPageListener());
 		fragments=new ArrayList<Fragment>();
